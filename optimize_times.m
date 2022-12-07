@@ -32,8 +32,8 @@ function [min_delay,c1_min,c2_min,z_min] = optimize_times(pmax,K,B,N,gi,gj)
 
          b = [-N -N K*pmax K*pmax];
 
-         lb = 0.15*ones(1,8);
-         %lb = zeros(1,8);
+         %lb = 0.15*ones(1,8);
+         lb = zeros(1,8);
          ub = Inf*ones(1,8);
 
          %solution
