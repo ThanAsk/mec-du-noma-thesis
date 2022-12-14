@@ -14,7 +14,7 @@ tic
 %channel weights / RRH(a): first col, RRH(b):second
 
 % while rounds <= 100
- [gi,gj] = set_gains('constant');
+ [gi,gj] = set_gains('random');
 
 % SNR = p (pmax?) db , K = (E/B*No)/p seconds
 
@@ -45,7 +45,7 @@ switch fix
 
             [min_delay,c1_min,c2_min,z_min] = optimize_times(pmax,K,B,N,gi,gj);
             %[min_delay,c1_min,c2_min,z_min] = optimize_times_multi(pmax,K,B,N,gi,gj);
-%             [min_delay,c1_min,c2_min,z_min] = optimize_times_aug(pmax,K,B,N,gi,gj);
+            %[min_delay,c1_min,c2_min,z_min] = optimize_times_aug(pmax,K,B,N,gi,gj);
             %[min_delay,c1_min,c2_min] = optimize_times_nonlin(pmax,K,B,N,gi,gj);
 
             opt_delays(pmax-SNRmin+1) = min_delay;

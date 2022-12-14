@@ -30,11 +30,11 @@ tiledlayout(2,8)
 for phase = 1:8
     nexttile
     mesh(1:-0.1:0,1:-0.1:0,Ris(:,:,phase));
-    title(['Ri',num2str(phase),''])
+    title(['Ri',phase,''])
 
-    nexttile(8+phase)
+    nexttile
     mesh(1:-0.1:0,1:-0.1:0,Rjs(:,:,phase));
-    title(['Rj',num2str(phase),''])
+    title(['Rj'+ phase])
     %  [m,idx] = max(Ri1s,[],'all');
     %  [row,col] = ind2sub([11,11],idx);
     %  c1_max = c1(row);
