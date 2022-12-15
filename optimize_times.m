@@ -25,12 +25,14 @@ function [min_delay,c1_min,c2_min,z_min] = optimize_times(pmax,K,B,N,gi,gj)
          %inequality constraints
          C_1 = B*Ri;
          C_2 = B*Rj;
-         C_3 = [c1*ones(1,4)*pmax,c2*ones(1,4)*pmax];
-         C_4 = [c2*ones(1,4)*pmax,c1*ones(1,4)*pmax];
-         C = [-C_1;-C_2;C_3;C_4] ;
+         %C_3 = [c1*ones(1,4)*pmax,c2*ones(1,4)*pmax];
+         %C_4 = [c2*ones(1,4)*pmax,c1*ones(1,4)*pmax];
+         %C = [-C_1;-C_2;C_3;C_4] ;
+          C = [-C_1;-C_2];
 
+         %b = [-N -N K*pmax K*pmax];
+          b = [-N -N];
 
-         b = [-N -N K*pmax K*pmax];
 
          %lb = 0.15*ones(1,8);
          lb = zeros(1,8);

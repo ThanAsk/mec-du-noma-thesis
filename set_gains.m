@@ -4,7 +4,7 @@ switch method
 
     case 'constant'
 
-        constant = 1;
+        constant = 1; %0.8 close to results
         gi = constant*ones(1,2);
         gj = constant*ones(1,2);
 
