@@ -19,14 +19,14 @@ tic
 % SNR = p (pmax?) db , K = (E/B*No)/p seconds
 
 %Keep K fixed , vary SNR
-%fix = 'K';
-fix = 'SNR';
+fix = 'K';
+%fix = 'SNR';
 
 switch fix
 
     case 'K'
         %Set K
-        K = 16;
+        K = 10;
 
         %Set SNR range
         SNRmin = 2;
@@ -77,12 +77,12 @@ switch fix
 
 
 
-%         nexttile
-%         %plot(1:size(zk,2),zk')
-%         bar(1:size(opt_z,2),opt_z')
-%         title('Time Sharing Schedule')
-%         xlabel('phase')
-%         ylabel('Time')
+        nexttile
+        %plot(1:size(zk,2),zk')
+        bar(1:size(opt_z,2),opt_z')
+        title('Time Sharing Schedule')
+        xlabel('phase')
+        ylabel('Time')
 
         
 
@@ -93,9 +93,14 @@ switch fix
         pmax = 20;
 
         %Set K range
-        Kmin = 2;
-        Kmax = 20;
-        Krange = Kmax-Kmin + 1;
+%         Kmin = 2;
+%         Kmax = 20;
+%         Krange = Kmax-Kmin + 1;
+         Kmin = 0.1;
+         Kmax = 1;
+         Krange = int8(10*(Kmax-Kmin) + 1);
+        
+
 
         opt_delays = zeros(1,Krange);
         opt_c1 = zeros(1,Krange);
@@ -104,46 +109,53 @@ switch fix
         %delays of each time sharing phase
         opt_z = zeros(Krange,8);
 
-        for K = Kmin:Kmax
+        for K = Kmin:0.1:Kmax
 
             [min_delay,c1_min,c2_min,z_min] = optimize_times(pmax,K,B,N,gi,gj);
             %[min_delay,c1_min,c2_min,z_min] = optimize_times_aug(pmax,K,B,N,gi,gj);
             %[min_delay,c1_min,c2_min] = optimize_times_nonlin(pmax,K,B,N,gi,gj);
 
-            opt_delays(K-Kmin+1) = min_delay;
-            opt_c1(K-Kmin+1) = c1_min;
-            opt_c2(K-Kmin+1) = c2_min;
-            opt_z(K-Kmin+1,:) = z_min';
+%             opt_delays(K-Kmin+1) = min_delay;
+%             opt_c1(K-Kmin+1) = c1_min;
+%             opt_c2(K-Kmin+1) = c2_min;
+%             opt_z(K-Kmin+1,:) = z_min';
+       
+            K_idx = int8(10*(K-Kmin)+1);
+            opt_delays(K_idx) = min_delay;
+            opt_c1(K_idx) = c1_min;
+            opt_c2(K_idx) = c2_min;
+            opt_z(K_idx,:) = z_min';
+
 
         end
-% 
-%         %tiledlayout(3,1)
-%         tiledlayout(2,1)
-%         nexttile;
-%         plot(Kmin:Kmax,opt_delays,'--.') %,'MarkerIndices',1:2:length(opt_delays))
-%         title(['SNR = ',num2str(pmax),'dB'])
-%         xlabel('K(s)')
-%         ylabel('sum_delay')
-%         axis([Kmin Kmax 0 max(opt_delays)+0.2])
-%         nexttile
-%         plot(Kmin:Kmax,opt_c1,'LineWidth',0.7)
-%         xlabel('K(s)')
-%         ylabel('c')
-%         hold on
-%         plot(Kmin:Kmax,opt_c2,'r')
-%         legend({'c1','c2'},'Location','southwest')
-%         %axis padded
-%         % axis([Kmin Kmax 0.5 1.1])
-%         %yticks(min(opt_c2):0.1:max(opt_c2))
+
+        tiledlayout(3,1)
+        %tiledlayout(2,1)
+        nexttile;
+        plot(Kmin:0.1:Kmax,opt_delays,'--.') %,'MarkerIndices',1:2:length(opt_delays))
+        title(['SNR = ',num2str(pmax),'dB'])
+        xlabel('K(s)')
+        ylabel('sum_delay')
+        %axis([Kmin Kmax 0 max(opt_delays)+0.2])
+        nexttile
+        plot(Kmin:0.1:Kmax,opt_c1,'LineWidth',0.7)
+        xlabel('K(s)')
+        ylabel('c')
+        hold on
+        plot(Kmin:0.1:Kmax,opt_c2,'r')
+        legend({'c1','c2'},'Location','southwest')
+        %axis padded
+        % axis([Kmin Kmax 0.5 1.1])
+        %yticks(min(opt_c2):0.1:max(opt_c2))
 
 
 
-%         nexttile
-%         %plot(1:size(zk,2),zk')
-%         bar(1:size(opt_z,2),opt_z')
-%         title('Time Sharing Schedule')
-%         xlabel('phase')
-%         ylabel('Time')
+        nexttile
+        %plot(1:size(zk,2),zk')
+        bar(1:size(opt_z,2),opt_z')
+        title('Time Sharing Schedule')
+        xlabel('phase')
+        ylabel('Time')
      
         
 
