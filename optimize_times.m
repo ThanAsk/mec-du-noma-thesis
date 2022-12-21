@@ -42,8 +42,8 @@ function [min_delay,c1_min,c2_min,z_min] = optimize_times(pmax,K,B,N,gi,gj)
          %options = optimoptions('linprog','Algorithm','dual-simplex');
          options = optimset('PlotFcns',@optimplotfval);
          [z,delay]= linprog(s,C,b,[],[],lb,ub,options);
-            
          
+
 
          if delay <= min_delay
              min_delay = delay;
