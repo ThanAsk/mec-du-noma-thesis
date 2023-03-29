@@ -1,6 +1,7 @@
 clear
 graph = 0.1;
-[gi,gj] = set_gains('random');
+[gi,gj] = set_gains('sym_random');
+
 
 %for K = 8:20
 %for pmax = 4:10
@@ -8,13 +9,19 @@ graph = 0.1;
 c1 = 1:-0.1:0;
 c2 = 1:-0.1:0;
 
+pmax = 20;
+K = 0.3;
+B = 1;
+N = 0.5;
+
+
 %[c1,c2] = ndgrid(1:-0.1:0);
 
 
 c = combvec(c1,c2);
 c = mat2cell(c',1*ones(1,121),2);
 c = reshape(c,[11, 11]);
-D = cellfun(@(x)min_delay(x,10,K,1,0.5,gi,gj),c,'UniformOutput',false);
+D = cellfun(@(x)min_delay(x,pmax,K,B,N,gi,gj),c,'UniformOutput',false);
 
 %Remove empty values 
 isEm = cellfun(@isempty, D) ;

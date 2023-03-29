@@ -16,10 +16,31 @@ switch method
         gi = [h(1) h(2)];
         gj = [h(3) h(4)];
 
-    case 'symmetric'
+    case 'distant_constant'
+
+        constant = 1; %0.8 close to results
+        l = 3;
+        d = 0.2;
+        gi = constant*[1 d^l];
+        gj = constant*[d^l 1];
+
+
+    case 'distant_random'
+
         variance = 1; % E[g] = Ε[γ]/(pk*B) 
-        l = 3; % Reyleigh exponent
-        vars = variance*[1 (0.2)^l; 0.2^l 1];
-        h = arrayfun(@(v))
+        l = 3; % path loss exponent
+        vars = variance*[1 (0.2)^l 0.2^l 1];
+        h = arrayfun(@(v)abs(sqrt(v/2)*(randn(1,1)+1i*randn(1,1))^2),vars);
+        gi = [h(1) h(2)];
+        gj = [h(3) h(4)];
+
+    case 'close_constant'
+        constant = 1; %0.8 close to results
+        l = 3;
+        gb = 1;
+        ga = 
+        gi = constant*[1 d^l];
+        gj = constant*[d^l 1];
+
 end
 

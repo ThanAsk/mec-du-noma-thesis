@@ -1,5 +1,5 @@
 
-[gi,gj] = set_gains('random');
+[gi,gj] = set_gains('sym_random');
 pmax = 20;
 %[c1,c2] = ndgrid(1:-0.1:0);
 Ris = zeros(11,11,8); 

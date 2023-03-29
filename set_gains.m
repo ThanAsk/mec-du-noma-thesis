@@ -16,15 +16,16 @@ switch method
         gi = [h(1) h(2)];
         gj = [h(3) h(4)];
 
-    case 'sym_constant'
+    case 'distant_constant'
 
         constant = 1; %0.8 close to results
         l = 3;
-        gi = constant*[1 (0.2)^l];
-        gj = constant*[0.2^l 1];
+        d = 2;
+        gi = constant*[1 d^l];
+        gj = constant*[d^l 1];
 
 
-    case 'sym_random'
+    case 'distant_random'
 
         variance = 1; % E[g] = Ε[γ]/(pk*B) 
         l = 3; % path loss exponent
@@ -32,5 +33,13 @@ switch method
         h = arrayfun(@(v)abs(sqrt(v/2)*(randn(1,1)+1i*randn(1,1))^2),vars);
         gi = [h(1) h(2)];
         gj = [h(3) h(4)];
+
+    case 'close_constant'
+        %users close --> distances to stations almost the same
+        l = 1;
+        ga = 1; %distance to base station a
+        gi = [ga (0.2)^l*ga];
+        gj = [ga (0.2)^l*ga];
+
 end
 

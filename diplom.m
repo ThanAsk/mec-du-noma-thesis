@@ -14,9 +14,9 @@ tic
 
 %channel weights / RRH(a): first col, RRH(b):second
 
- while rounds <= 20 % 100
+%  while rounds <= 1 % 100
 
- [gi,gj] = set_gains('sym_random');
+ [gi,gj] = set_gains('distant_constant');
   
 % SNR = p (pmax?) db , K = (E/B*No)/p seconds
 
@@ -58,33 +58,33 @@ switch fix
 
         end
 
-%         tiledlayout(3,1)
-%         %tiledlayout(2,1)
-%         nexttile;
-%         plot(SNRmin:SNRmax,opt_delays,'--.','MarkerIndices',1:2:length(opt_delays))
-%         title(['K = ',num2str(K),'s'])
-%         xlabel('SNR(dB)')
-%         ylabel('sum delay')
-%         %axis([SNRmin SNRmax min(opt_delays) Inf])
-%         nexttile;
-%         plot(SNRmin:SNRmax,opt_c1,'LineWidth',0.7)
-%         xlabel('SNR(dB)')
-%         ylabel('c')
-%         hold on
-%         plot(SNRmin:SNRmax,opt_c2,'r')
-%         legend({'c1','c2'},'Location','southwest')
-%         %axis padded
-%         axis([SNRmin SNRmax 0.1 1.1])
-%         %yticks(min(opt_c2):0.1:max(opt_c2))
-% 
-% 
-% 
-%         nexttile
-%         %plot(1:size(zk,2),zk')
-%         bar(1:size(opt_z,2),opt_z')
-%         title('Time Sharing Schedule')
-%         xlabel('phase')
-%         ylabel('Time')
+        tiledlayout(3,1)
+        %tiledlayout(2,1)
+        nexttile;
+        plot(SNRmin:SNRmax,opt_delays,'--.','MarkerIndices',1:2:length(opt_delays))
+        title(['K = ',num2str(K),'s'])
+        xlabel('SNR(dB)')
+        ylabel('sum delay')
+        %axis([SNRmin SNRmax min(opt_delays) Inf])
+        nexttile;
+        plot(SNRmin:SNRmax,opt_c1,'LineWidth',0.7)
+        xlabel('SNR(dB)')
+        ylabel('c')
+        hold on
+        plot(SNRmin:SNRmax,opt_c2,'r')
+        legend({'c1','c2'},'Location','southwest')
+        %axis padded
+        axis([SNRmin SNRmax 0.1 1.1])
+        %yticks(min(opt_c2):0.1:max(opt_c2))
+
+
+
+        nexttile
+        %plot(1:size(zk,2),zk')
+        bar(1:size(opt_z,2),opt_z')
+        title('Time Sharing Schedule')
+        xlabel('phase')
+        ylabel('Time')
 
         
 
@@ -92,14 +92,14 @@ switch fix
 
         %SNR fixed , vary K
         %Set SNR
-        pmax = 20;
+        pmax = 5;
 
         %Set K range
 %         Kmin = 2;
 %         Kmax = 20;
 %         Krange = Kmax-Kmin + 1;
          Kmin = 0.01;
-         Kmax = 0.1;
+         Kmax = 0.2;
          Krange = int8(100*(Kmax-Kmin) + 1);
         
 
@@ -132,65 +132,65 @@ switch fix
 
         end
 
-%         tiledlayout(3,1)
-%         %tiledlayout(2,1)
-%         nexttile;
-%         plot(Kmin:0.01:Kmax,opt_delays,'--.') %,'MarkerIndices',1:2:length(opt_delays))
-%         title(['SNR = ',num2str(pmax),'dB'])
-%         xlabel('K(s)')
-%         ylabel('Sum Delay')
-%         %axis([Kmin Kmax 0 max(opt_delays)+0.2])
-%         nexttile
-%         plot(Kmin:0.01:Kmax,opt_c1,'LineWidth',0.7)
-%         xlabel('K(s)')
-%         ylabel('c')
-%         hold on
-%         plot(Kmin:0.01:Kmax,opt_c2,'r')
-%         legend({'c1','c2'},'Location','southwest')
-%         %axis padded
-%         % axis([Kmin Kmax 0.5 1.1])
-%         %yticks(min(opt_c2):0.1:max(opt_c2))
-% 
-% 
-% 
-%         nexttile
-%         %plot(1:size(zk,2),zk')
-%         bar(1:size(opt_z,2),opt_z')
-%         title('Time Sharing Schedule')
-%         xlabel('phase')
-%         ylabel('Time')
+        tiledlayout(3,1)
+        %tiledlayout(2,1)
+        nexttile;
+        plot(Kmin:0.01:Kmax,opt_delays,'--.') %,'MarkerIndices',1:2:length(opt_delays))
+        title(['SNR = ',num2str(pmax),'dB'])
+        xlabel('K(s)')
+        ylabel('Sum Delay')
+        %axis([Kmin Kmax 0 max(opt_delays)+0.2])
+        nexttile
+        plot(Kmin:0.01:Kmax,opt_c1,'LineWidth',0.7)
+        xlabel('K(s)')
+        ylabel('c')
+        hold on
+        plot(Kmin:0.01:Kmax,opt_c2,'r')
+        legend({'c1','c2'},'Location','southwest')
+        %axis padded
+        % axis([Kmin Kmax 0.5 1.1])
+        %yticks(min(opt_c2):0.1:max(opt_c2))
+
+
+
+        nexttile
+        %plot(1:size(zk,2),zk')
+        bar(1:size(opt_z,2),opt_z')
+        title('Time Sharing Schedule')
+        xlabel('phase')
+        ylabel('Time')
      
         
 
 end
 
-average_delay = average_delay + opt_delays;
-average_c1 = average_c1 + opt_c1;
-average_c2 = average_c2 + opt_c2;
+% average_delay = average_delay + opt_delays;
+% average_c1 = average_c1 + opt_c1;
+% average_c2 = average_c2 + opt_c2;
+% 
+% rounds = rounds + 1 ;
+% 
+% end
 
-rounds = rounds + 1 ;
-
-end
-
-average_delay = average_delay/rounds;
-average_c1 = average_c1/rounds;
-average_c2 = average_c2/rounds;
-
-tiledlayout(2,1)
-nexttile;
-plot(SNRmin:SNRmax,average_delay,'--.') %,'MarkerIndices',1:2:length(opt_delays))
-title(['K = ',num2str(K),'s'])
-xlabel('SNR(dB)')
-ylabel('sum_delay')
-% axis([SNRmin SNRmax 0 Inf])
-nexttile;
-plot(SNRmin:SNRmax,average_c1,'LineWidth',0.7)
-xlabel('SNR(dB)')
-ylabel('c')
-hold on
-plot(SNRmin:SNRmax,average_c2,'LineWidth',0.7)
-legend({'c1','c2'},'Location','southwest')
- 
+% average_delay = average_delay/rounds;
+% average_c1 = average_c1/rounds;
+% average_c2 = average_c2/rounds;
+% 
+% tiledlayout(2,1)
+% nexttile;
+% plot(SNRmin:SNRmax,average_delay,'--.') %,'MarkerIndices',1:2:length(opt_delays))
+% title(['K = ',num2str(K),'s'])
+% xlabel('SNR(dB)')
+% ylabel('sum_delay')
+% % axis([SNRmin SNRmax 0 Inf])
+% nexttile;
+% plot(SNRmin:SNRmax,average_c1,'LineWidth',0.7)
+% xlabel('SNR(dB)')
+% ylabel('c')
+% hold on
+% plot(SNRmin:SNRmax,average_c2,'LineWidth',0.7)
+% legend({'c1','c2'},'Location','southwest')
+%  
 
 % 
 % tiledlayout(2,1)
