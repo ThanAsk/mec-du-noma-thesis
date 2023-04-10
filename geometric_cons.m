@@ -41,7 +41,7 @@ c(4) = sum(exp(z+pj)) - K*pmax;
 c(5:8) = arrayfun(@(k)log(2^exp(ri(1,k))-1) + log(1 + gj(dec_1(1,k))*exp(pj(1,k))) - pi(1,k) - log(gi(dec_1(1,k))),[1 2 3 4]);
 c(9:12) = arrayfun(@(k)log(2^exp(ri(1,k))-1) - pj(1,k) - log(gi(dec_1(1,k))),[5 6 7 8]);
 
-c(13:16) = arrayfun(@(k)log(2^exp(rj(1,k))-1) - pj(1,k) - log(gi(dec_2(1,k))),[1 2 3 4]);
+c(13:16) = arrayfun(@(k)log(2^exp(rj(1,k))-1) - pj(1,k) - log(gj(dec_2(1,k))),[1 2 3 4]);
 c(17:20) = arrayfun(@(k) log(2^exp(rj(1,k))-1) + log(1 + gi(dec_2(1,k))*exp(pi(1,k))) - pj(1,k) - log(gj(dec_2(1,k))),[5 6 7 8]);
 
 

@@ -22,14 +22,14 @@ ub = Inf*ones(1,40);
 
 %starting point
 
-x0 = zeros(1,40); %change it
+x0 = ones(1,40); %change it
 
 %options = optimoptions('linprog','Algorithm','dual-simplex');
 options = optimset('PlotFcns',@optimplotfval);
 [x,delay]= fmincon(s,x0,[],[],[],[],lb,ub,nonlcon,options);
 
 min_delay = delay;
-z_min = x(1:8);
+z_min = exp(x(1:8));
 
 
 
