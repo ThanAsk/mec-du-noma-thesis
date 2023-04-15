@@ -1,4 +1,4 @@
-function [min_delay,z_min] = geometricOpt2(K,pmax,N,gi,gj) 
+function [min_delay,z_min] = geometricOpt3(K,pmax,N,gi,gj) 
 
 %geometric method
 %optimize with interior-point method the transformed variables
@@ -17,12 +17,13 @@ while A > tol
 s = @(x)log(sum(exp(x(1:8))));
 
 %non linear inequality constraints
-nonlcon = @(x)geometric_cons2(x,K,pmax,N,gi,gj,x0) ;
+nonlcon = @(x)geometric_cons3(x,K,pmax,N,gi,gj,x0) ;
 
 
 %lb = 0.15*ones(1,8);
 lb = [];
-ub = Inf*ones(1,40);
+%ub = Inf*ones(1,40);
+ub = [Inf*ones(1,8),pmax*ones(1,8),pmax*ones(1,8),Inf*ones(1,16)];
 
 %solution
 
@@ -35,13 +36,16 @@ options = optimoptions(oldoptions,'PlotFcns',@optimplotfval);
 A = sqrt((x_opt-x0).^2);
 x0 = x_opt;
 
-t = t + 1;
+t = t + 1
 
 end
 
 %min_delay = delay;
 z_min = exp(x0(1:8));
 min_delay = sum(z_min);
+
+
+
 
 
 end

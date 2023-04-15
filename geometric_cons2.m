@@ -19,15 +19,17 @@ c(2) =  -sum(rj) + N;
 c(3) = log(sum(exp(ei))) - log(K*pmax);
 c(4) = log(sum(exp(ej))) - log(K*pmax);
 
-%x0
+gi_1 = gi(dec_1);
+gj_1 = gj(dec_1);
 
+gi_2 = gi(dec_2);
+gj_2 = gj(dec_2);
 
+c(5:8) = arrayfun(@(k)approxConstraintFirst(z,ri,ei,ej,gi_1,gj_1,x0,k),[1 2 3 4]);
+c(9:12) = arrayfun(@(k)approxConstraintSec(z,ri,ei,gi_1,x0,k),[5 6 7 8]);
 
-c(5:8) = arrayfun(@(k)approxConstraintFirst(z,ri,ei,ej,gi(dec_1(k)),gj(dec_1(k)),f0,k),[1 2 3 4]);
-c(9:12) = arrayfun(@(k)approxConstraintSec(z,ri,ei,gi(dec_1(k)),s0,k),[5 6 7 8]);
-
-c(13:16) = arrayfun(@(k)approxConstraintFirst(z,rj,ej,ei,gj(dec_2(k)),gi(dec_2(k)),f1,k),[5 6 7 8]);
-c(17:20) = arrayfun(@(k)approxConstraintSec(z,rj,ej,gj(dec_2(k)),s1,k),[1 2 3 4]);
+c(13:16) = arrayfun(@(k)approxConstraintFirst(z,rj,ej,ei,gj_2,gi_2,x0,k),[5 6 7 8]);
+c(17:20) = arrayfun(@(k)approxConstraintSec(z,rj,ej,gj_2,x0,k),[1 2 3 4]);
 
 
 

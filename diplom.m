@@ -36,8 +36,8 @@ switch fix
         SNRrange = SNRmax-SNRmin + 1;
 
         opt_delays = zeros(1,SNRrange);
-        %opt_c1 = zeros(1,SNRrange);
-        %opt_c2 = zeros(1,SNRrange);
+        opt_c1 = zeros(1,SNRrange);
+        opt_c2 = zeros(1,SNRrange);
 
         %delays of each time sharing phase
         opt_z = zeros(SNRrange,8);
@@ -45,18 +45,18 @@ switch fix
 
         for pmax = SNRmin:SNRmax
 
-            %[min_delay,c1_min,c2_min,z_min] = optimize_times(pmax,K,B,N,gi,gj);
+            [min_delay,c1_min,c2_min,z_min] = optimize_times(pmax,K,B,N,gi,gj);
 
             %[min_delay,c1_min,c2_min,z_min] = optimize_times_multi(pmax,K,B,N,gi,gj);
             %[min_delay,c1_min,c2_min,z_min] = optimize_times_aug(pmax,K,B,N,gi,gj);
             %[min_delay,c1_min,c2_min] = optimize_times_nonlin(pmax,K,B,N,gi,gj);
 
-            [min_delay,z_min] = geometricOpt(K,pmax,N,gi,gj); 
+            
 
 
             opt_delays(pmax-SNRmin+1) = min_delay;
-            %opt_c1(pmax-SNRmin+1) = c1_min;
-            %opt_c2(pmax-SNRmin+1) = c2_min;
+            opt_c1(pmax-SNRmin+1) = c1_min;
+            opt_c2(pmax-SNRmin+1) = c2_min;
             opt_z(pmax-SNRmin+1,:) = z_min';
 
 
@@ -69,14 +69,14 @@ switch fix
         title(['K = ',num2str(K),'s'])
         xlabel('SNR(dB)')
         ylabel('sum delay')
-%         %axis([SNRmin SNRmax min(opt_delays) Inf])
-%         nexttile;
-%         plot(SNRmin:SNRmax,opt_c1,'LineWidth',0.7)
-%         xlabel('SNR(dB)')
-%         ylabel('c')
-%         hold on
-%         plot(SNRmin:SNRmax,opt_c2,'r')
-%         legend({'c1','c2'},'Location','southwest')
+        %axis([SNRmin SNRmax min(opt_delays) Inf])
+        nexttile;
+        plot(SNRmin:SNRmax,opt_c1,'LineWidth',0.7)
+        xlabel('SNR(dB)')
+        ylabel('c')
+        hold on
+        plot(SNRmin:SNRmax,opt_c2,'r')
+        legend({'c1','c2'},'Location','southwest')
         %axis padded
         axis([SNRmin SNRmax 0.1 1.1])
         %yticks(min(opt_c2):0.1:max(opt_c2))
@@ -122,10 +122,10 @@ switch fix
             %[min_delay,c1_min,c2_min] = optimize_times_nonlin(pmax,K,B,N,gi,gj);
             
 
-%             opt_delays(K-Kmin+1) = min_delay;
-%             opt_c1(K-Kmin+1) = c1_min;
-%             opt_c2(K-Kmin+1) = c2_min;
-%             opt_z(K-Kmin+1,:) = z_min';
+            opt_delays(K-Kmin+1) = min_delay;
+            opt_c1(K-Kmin+1) = c1_min;
+            opt_c2(K-Kmin+1) = c2_min;
+            opt_z(K-Kmin+1,:) = z_min';
        
             K_idx = int8(100*(K-Kmin)+1);
             opt_delays(K_idx) = min_delay;
