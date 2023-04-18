@@ -6,13 +6,16 @@ function [min_delay,z_min] = geometricOpt3(K,pmax,N,gi,gj)
 
 %  optimization variables  x = [z,ei,ej,ri,rj]
 
-A = Inf;
-tol = 10^-6;
+Ax = Inf;
+Af = Inf;
+tolx = 10^-6;
+tolf = 10^-6;
 %x0 = [zeros(1,8),(K*pmax/8).*ones(1,8),(K*pmax/8).*ones(1,8),zeros(1,8),zeros(1,8)];
 x0 = zeros(1,40);
 
+
 t = 0;
-while A > tol
+while Ax > tolx & Af > tolf 
 %objective function
 s = @(x)log(sum(exp(x(1:8))));
 
@@ -32,8 +35,13 @@ oldoptions = optimoptions('fmincon','Algorithm','interior-point');
 options = optimoptions(oldoptions,'PlotFcns',@optimplotfval);
 [x_opt,~]= fmincon(s,x0,[],[],[],[],lb,ub,nonlcon,options);
 
+z_opt = x_opt(1:8);
+ri_opt = x_opt(25:32);
+rj_opt = x_opt(33:40);
 
-A = sqrt((x_opt-x0).^2);
+Ax = sqrt(([z_opt,ri_opt,rj_opt]-[x0(1:8),x0(25:32),x0(33:40)]).^2);
+%A = sqrt((x_opt-x0).^2);
+Af = abs(sum(z_opt) - sum(x0(1:8)));
 x0 = x_opt;
 
 t = t + 1

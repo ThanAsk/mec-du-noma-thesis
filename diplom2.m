@@ -4,7 +4,7 @@ B = 1; %MHz (important?)
 N = 0.5 ; %Mbit
 
 %[gi,gj] = set_gains('distant_constant');
-[gi,gj] = set_gains('distant_constant');
+[gi,gj] = set_gains('distant_random');
 
 
 %Keep K fixed , vary SNR
@@ -15,7 +15,7 @@ switch fix
 
     case 'K'
         %Set K
-        K = 5;
+        K = 1;
 
         %Set SNR range
         SNRmin = 20;
@@ -27,18 +27,19 @@ switch fix
         %delays of each time sharing phase
         opt_z = zeros(SNRrange,8);
 
-
+        r = 0;
         for pmax = SNRmin:SNRmax
                
 
-            [min_delay,z_min] = geometricOpt3(K,pmax,N,gi,gj); 
-            %[min_delay,z_min] = geometricOpt2(K,pmax,N,gi,gj); 
+            %[min_delay,z_min] = geometricOpt4(K,pmax,N,gi,gj);
+            [min_delay,z_min] = geometricOpt3(K,pmax,N,gi,gj);
+            
 
 
             opt_delays(pmax-SNRmin+1) = min_delay;
             opt_z(pmax-SNRmin+1,:) = z_min';
             
-
+            r = r + 1
         end
 
         tiledlayout(2,1)

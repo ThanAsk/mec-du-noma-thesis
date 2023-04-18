@@ -24,7 +24,8 @@ switch method
         gi = constant*[1 d^l];
         gj = constant*[d^l 1];
 
-
+%         gi = flip(gi);
+%         gj = flip(gj);
     case 'distant_random'
 
         variance = 1; % E[g] = Ε[γ]/(pk*B) 
@@ -40,6 +41,9 @@ switch method
         ga = 1; %distance to base station a
         gi = [ga (0.2)^l*ga];
         gj = [ga (0.2)^l*ga];
+
+%         gi = flip(gi);
+%         gj = flip(gj);
 
 end
 
