@@ -1,0 +1,12 @@
+B = 1; %MHz (important?)
+N = 0.5 ; %Mbit
+
+K = 1;
+pmax = 20;
+
+%[gi,gj] = set_gains('distant_constant');
+[gi,gj] = set_gains('distant_random');
+
+
+sj_start = ((2^(N/B)-1)/8)*ones(1,8);
+[z_opt,si_opt] = alternating_Opt_si(K,pmax,N,B,gi,gj,sj_start);

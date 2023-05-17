@@ -23,7 +23,7 @@ Aeq = [[zeros(1,40),-ones(1,8),zeros(1,8)];[zeros(1,40),-ones(1,8),zeros(1,8)]];
 beq = N*[1,1];
 
 %non linear inequality constraints
-nonlcon = @(x)geometric_cons3(x,K,pmax,N,gi,gj,x0) ;
+nonlcon = @(x)geometric_cons4(x,K,pmax,N,gi,gj,x0) ;
 
 
 
@@ -39,7 +39,7 @@ options = optimoptions(oldoptions,'PlotFcns',@optimplotfval);
 [x_opt,~]= fmincon(s,x0,[],[],Aeq,beq,lb,ub,nonlcon,options);
 
 
-A = sqrt((x_opt-x0).^2);
+A = sqrt(sum((x_opt-x0).^2));
 x0 = x_opt;
 
 t = t + 1

@@ -1,0 +1,50 @@
+function [z_opt,si_opt] = alternating_Opt(K,pmax,N,B,gi,gj,sj)
+
+%vectors to be optimized
+% x = [zk,vk] for k = 1...8
+
+%weights for each phase k according to base station 
+gi_f = gi([1 1 2 2]);
+gj_f = gj([1 1 2 2]);
+
+gi_s = gi([1 2 1 2]);
+gj_s = gj([1 2 1 2]);
+
+
+
+
+%objective function
+s = @(x)sum(x(1:16));
+
+%linear inequality constraints
+c2 = [log(1+sj),zeros(1,8)];
+c3 = [zeros(1,8),1./gi_f + (gj_f.*sj(1:4))./(gi_f.*gj_s),1./gi_s];
+c4 = [1./gj_s,1./gj_f,zeros(1,4),(gi_f.*sj(5:8))./(gj_f.*gi_s)];
+
+A = [c2;c3;c4];
+b = [N/B,K*pmax,K*pmax];
+
+%non linear inequality constraints
+nonlcon = @(x)sum(x(1:8).*log2(1+x(9:16)./x(1:8))) ;
+
+
+%lb = 0.15*ones(1,8);
+lb = zeros(1,40);
+ub = Inf*ones(1,40);
+
+%solution
+
+%starting point
+
+x0 = ones(1,40); %change it
+
+%options = optimoptions('linprog','Algorithm','dual-simplex');
+options = optimset('PlotFcns',@optimplotfval);
+[x,delay]= fmincon(s,x0,A,b,[],[],lb,ub,nonlcon,options);
+
+min_delay = delay;
+z_min = exp(x(1:8));
+
+
+end
+

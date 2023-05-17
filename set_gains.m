@@ -21,8 +21,8 @@ switch method
         constant = 1; %0.8 close to results
         l = 3;
         d = 2;
-        gi = constant*[1 d^l];
-        gj = constant*[d^l 1];
+        gi = constant*[1 d^(-l)];
+        gj = constant*[d^(-l) 1];
 
 %         gi = flip(gi);
 %         gj = flip(gj);

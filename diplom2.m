@@ -3,8 +3,8 @@ clear;
 B = 1; %MHz (important?)
 N = 0.5 ; %Mbit
 
-%[gi,gj] = set_gains('distant_constant');
-[gi,gj] = set_gains('distant_random');
+[gi,gj] = set_gains('close_constant');
+%[gi,gj] = set_gains('constant');
 
 
 %Keep K fixed , vary SNR
@@ -15,7 +15,7 @@ switch fix
 
     case 'K'
         %Set K
-        K = 1;
+        K = 5;
 
         %Set SNR range
         SNRmin = 20;
@@ -32,10 +32,10 @@ switch fix
                
 
             %[min_delay,z_min] = geometricOpt4(K,pmax,N,gi,gj);
-            [min_delay,z_min] = geometricOpt3(K,pmax,N,gi,gj);
+            [min_delay,z_min,Ax,Af] = geometricOpt3(K,pmax,N,gi,gj);
             
-
-
+            Ax
+            Af
             opt_delays(pmax-SNRmin+1) = min_delay;
             opt_z(pmax-SNRmin+1,:) = z_min';
             

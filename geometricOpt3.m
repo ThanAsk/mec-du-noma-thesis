@@ -1,4 +1,4 @@
-function [min_delay,z_min] = geometricOpt3(K,pmax,N,gi,gj) 
+function [min_delay,z_min,Ax,Af] = geometricOpt3(K,pmax,N,gi,gj) 
 
 %geometric method
 %optimize with interior-point method the transformed variables
@@ -39,9 +39,9 @@ z_opt = x_opt(1:8);
 ri_opt = x_opt(25:32);
 rj_opt = x_opt(33:40);
 
-Ax = sqrt(([z_opt,ri_opt,rj_opt]-[x0(1:8),x0(25:32),x0(33:40)]).^2);
+Ax = sqrt(sum((exp([z_opt,ri_opt,rj_opt])-exp([x0(1:8),x0(25:32),x0(33:40)])).^2));
 %A = sqrt((x_opt-x0).^2);
-Af = abs(sum(z_opt) - sum(x0(1:8)));
+Af = abs(sum(exp(z_opt)) - sum(exp(x0(1:8))));
 x0 = x_opt;
 
 t = t + 1
