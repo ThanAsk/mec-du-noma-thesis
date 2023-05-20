@@ -5,7 +5,7 @@ N = 0.5 ; %Mbit
 K = 1;
  %Set SNR range
  SNRmin = 20;
- SNRmax = 30;
+ SNRmax = 25;
  SNRrange = SNRmax-SNRmin + 1;
 
  opt_delays = zeros(1,SNRrange);
@@ -22,7 +22,7 @@ A = Inf;
 x0 = zeros(1,16);
 sj_opt = ((2^(N/B)-1)^(1/8))*ones(1,8);
 
-while A > 10^-3
+while A > 10^-6
 
 [z_opt1,si_opt] = alternating_Opt_si(K,pmax,N,B,gi,gj,sj_opt,x0);
 x0 = [z_opt1,si_opt.*z_opt1];
@@ -30,8 +30,9 @@ x0 = [z_opt1,si_opt.*z_opt1];
 x0 = [z_opt2,sj_opt.*z_opt2];
 
 
-A = sqrt(sum((z_opt2-z_opt1).^2));
+%A = sqrt(sum((z_opt2-z_opt1).^2));
 %A = sum(abs(z_opt2 - z_opt1)); %l1 norm
+A = abs(sum(z_opt2)-sum(z_opt1));
 end
 
 opt_delays(pmax-SNRmin+1) = sum(z_opt2);

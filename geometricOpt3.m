@@ -15,7 +15,7 @@ x0 = zeros(1,40);
 
 
 t = 0;
-while Ax > tolx & Af > tolf 
+while Ax > tolx && Af > tolf 
 %objective function
 s = @(x)log(sum(exp(x(1:8))));
 
