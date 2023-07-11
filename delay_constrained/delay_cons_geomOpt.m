@@ -37,9 +37,9 @@ ub = Inf*ones(1,40);
 
 %solution
 
-
-oldoptions = optimoptions('fmincon','Algorithm','interior-point');
-options = optimoptions(oldoptions,'PlotFcns',@optimplotfval);
+options = optimoptions('fmincon','Algorithm','interior-point');
+% oldoptions = optimoptions('fmincon','Algorithm','interior-point');
+% options = optimoptions(oldoptions,'PlotFcns',@optimplotfval);
 [x_opt,~]= fmincon(s,x0,[],[],[],[],lb,ub,nonlcon,options);
 
 

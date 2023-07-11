@@ -3,13 +3,13 @@ clear;
 B = 1; %MHz (important?)
 N = 0.5 ; %Mbit
 
-[gi,gj] = set_gains('close_constant');
-%[gi,gj] = set_gains('constant');
+%[gi,gj] = set_gains('distant_constant');
+ [gi,gj] = set_gains('constant');
 
 
 %Keep K fixed , vary SNR
-fix = 'K';
-%fix = 'SNR';
+%fix = 'K';
+fix = 'SNR';
 
 switch fix
 
@@ -27,19 +27,19 @@ switch fix
         %delays of each time sharing phase
         opt_z = zeros(SNRrange,8);
 
-        r = 0;
-        for pmax = SNRmin:SNRmax
-               
+%         r = 0;
+        for pdb = SNRmin:SNRmax
+             pmax = 10^(pdb/10);  
 
             %[min_delay,z_min] = geometricOpt4(K,pmax,N,gi,gj);
             [min_delay,z_min,Ax,Af] = geometricOpt3(K,pmax,N,gi,gj);
             
-            Ax
-            Af
-            opt_delays(pmax-SNRmin+1) = min_delay;
-            opt_z(pmax-SNRmin+1,:) = z_min';
+%             Ax
+%             Af
+            opt_delays(pdb-SNRmin+1) = min_delay;
+            opt_z(pdb-SNRmin+1,:) = z_min';
             
-            r = r + 1
+%             r = r + 1
         end
 
         tiledlayout(2,1)
@@ -63,7 +63,8 @@ switch fix
 
         %SNR fixed , vary K
         %Set SNR
-        pmax = 20;
+        pdb = 20;
+        pmax = 10^(pdb/10); 
 
         %Set K range
          Kmin = 0.1;
@@ -77,7 +78,7 @@ switch fix
 
         for K = Kmin:0.1:Kmax
 
-                    
+                   
             [min_delay,z_min] = geometricOpt3(K,pmax,N,gi,gj); 
 
             K_idx = int8(10*(K-Kmin)+1);
@@ -91,7 +92,7 @@ switch fix
         tiledlayout(2,1)
         nexttile;
         plot(Kmin:0.1:Kmax,opt_delays,'--.') %,'MarkerIndices',1:2:length(opt_delays))
-        title(['SNR = ',num2str(pmax),'dB'])
+        title(['SNR = ',num2str(pdb),'dB'])
         xlabel('K(s)')
         ylabel('Sum Delay')
       

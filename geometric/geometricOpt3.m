@@ -30,9 +30,10 @@ ub = [Inf*ones(1,8),pmax*ones(1,8),pmax*ones(1,8),Inf*ones(1,16)];
 
 %solution
 
-
-oldoptions = optimoptions('fmincon','Algorithm','interior-point');
-options = optimoptions(oldoptions,'PlotFcns',@optimplotfval);
+options = optimoptions('fmincon','Algorithm','interior-point');
+%Display objective value progression
+% oldoptions = optimoptions('fmincon','Algorithm','interior-point');
+% options = optimoptions(oldoptions,'PlotFcns',@optimplotfval);
 [x_opt,~]= fmincon(s,x0,[],[],[],[],lb,ub,nonlcon,options);
 
 z_opt = x_opt(1:8);
@@ -49,7 +50,7 @@ t = t + 1
 end
 
 %min_delay = delay;
-z_min = exp(x0(1:8));
+z_min = exp(x_opt(1:8));
 min_delay = sum(z_min);
 
 

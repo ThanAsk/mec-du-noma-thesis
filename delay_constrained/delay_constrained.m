@@ -1,8 +1,8 @@
 tic
 clear; 
 
-B = 1; %MHz 
-N = 0.5 ; %Mbit
+B = 10^6; % Hz 
+N = 0.5*(10^6) ; %bit
 
 %[gi,gj] = set_gains('close_constant');
 [gi,gj] = set_gains('constant');
@@ -10,7 +10,7 @@ N = 0.5 ; %Mbit
 %Weight vector
 w = [0.5,0.5];
 
-%Set range of  maximum acceptable delays
+%Set range of  maximum acceptable delays (in seconds)
 Dmin = 0.2;
 Dmax = 1;
 Drange = 10*(Dmax-Dmin);
@@ -50,9 +50,9 @@ nexttile
 h = bar(1:size(opt_ei,2),opt_ei');
 % set(h, {'DisplayName'}, {mat2str(Dmin:0.1:Dmax)})
 % legend()
-% title('Energy of UEi per phase')
-% xlabel('phase')
-% ylabel('Energy')  
+title('Energy of UEi per phase')
+xlabel('phase')
+ylabel('Energy')  
 
 nexttile      
 bar(1:size(opt_ej,2),opt_ej')

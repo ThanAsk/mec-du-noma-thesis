@@ -8,29 +8,36 @@
 % z = xx.*log((1 + 2*yy)./(1+50*yy));
 % surf(x,y,z)
 
-g = 1;
-pj_a = 10;
-a = g/(1+g*pj_a);
+% g = 1;
+% pj_a = 10;
+% a = g/(1+g*pj_a);
+% 
+% pi_a = 1:30;
+% pi_b = 1:30;
+% 
+% [pi_a,pi_b] = meshgrid(pi_a,pi_b);
+% 
+% l1 = (1+pi_b./pi_a)./(log(1+g*pi_b)-pi_b./pi_a);
+% l3 = 1./pi_a - log(1+g*pi_a)./pi_a;
+% %surf(pi_a,pi_b,l3)
+% 
+% z = zeros(1,900);
+% e = zeros(1,900);
+% for k = 1:900
+% z(k) = a*(l1(k)/l3(k))*lambertw(-1,-(exp((-1./l1(k) + 1)*log(2))*log(2)))./log(2);
+% e(k) = ((log(2)+lambertw(-1,-(exp((-1./l1(k) + 1)*log(2))*log(2))))./log(2))*(l1(k)/l3(k));
+% end
+% 
+% plot(z,'o')
+% plot(e,'o')
+% z1 = z(imag(z)==0);
 
-pi_a = 1:30;
-pi_b = 1:30;
-
-[pi_a,pi_b] = meshgrid(pi_a,pi_b);
-
-l1 = (1+pi_b./pi_a)./(log(1+g*pi_b)-pi_b./pi_a);
-l3 = 1./pi_a - log(1+g*pi_a)./pi_a;
-%surf(pi_a,pi_b,l3)
-
-z = zeros(1,900);
-e = zeros(1,900);
-for k = 1:900
-z(k) = a*(l1(k)/l3(k))*lambertw(-1,-(exp((-1./l1(k) + 1)*log(2))*log(2)))./log(2);
-e(k) = ((log(2)+lambertw(-1,-(exp((-1./l1(k) + 1)*log(2))*log(2))))./log(2))*(l1(k)/l3(k));
-end
-
-plot(z,'o')
-plot(e,'o')
-z1 = z(imag(z)==0);
-
-
+a = 5;
+b = 6;
+c = 3;
+n = (0.5/8);
+f = @(z) z*log(1 + a/(z+b))-n*log(2);
+g = @(z) z*log(1 + c/z) - n*log(2);
+x = fsolve(f,0);
+x2 = fsolve(g,1);
 

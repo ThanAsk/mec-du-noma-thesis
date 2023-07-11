@@ -16,25 +16,25 @@ tic
 
 %  while rounds <= 1 % 100
 
- [gi,gj] = set_gains('distant_constant');
+ [gi,gj] = set_gains('constant');
   
 % SNR = p (pmax?) db , K = (E/B*No)/p seconds
 
-%Keep K fixed , vary SNR
-fix = 'K';
-%fix = 'SNR';
+%Keep one parameter fixed , vary the other
+%fix = 'K';
+fix = 'SNR';
 
 switch fix
 
     case 'K'
         %Set K
-        K = 0.1;
+        K = 0.3;
 
         %Set SNR range
         SNRmin = 2;
         SNRmax = 30;
         SNRrange = SNRmax-SNRmin + 1;
-
+        
         opt_delays = zeros(1,SNRrange);
         opt_c1 = zeros(1,SNRrange);
         opt_c2 = zeros(1,SNRrange);
@@ -43,8 +43,9 @@ switch fix
         opt_z = zeros(SNRrange,8);
 
 
-        for pmax = SNRmin:SNRmax
-
+        for pdb = SNRmin:SNRmax
+            
+            pmax = 10^(pdb/10);
             [min_delay,c1_min,c2_min,z_min] = optimize_times(pmax,K,B,N,gi,gj);
 
             %[min_delay,c1_min,c2_min,z_min] = optimize_times_multi(pmax,K,B,N,gi,gj);
@@ -54,10 +55,10 @@ switch fix
             
 
 
-            opt_delays(pmax-SNRmin+1) = min_delay;
-            opt_c1(pmax-SNRmin+1) = c1_min;
-            opt_c2(pmax-SNRmin+1) = c2_min;
-            opt_z(pmax-SNRmin+1,:) = z_min';
+            opt_delays(pdb-SNRmin+1) = min_delay;
+            opt_c1(pdb-SNRmin+1) = c1_min;
+            opt_c2(pdb-SNRmin+1) = c2_min;
+            opt_z(pdb-SNRmin+1,:) = z_min';
 
 
         end
@@ -96,13 +97,14 @@ switch fix
 
         %SNR fixed , vary K
         %Set SNR
-        pmax = 5;
+        pdb = 10;
+        pmax = 10^(pdb/10);
 
         %Set K range
 %         Kmin = 2;
 %         Kmax = 20;
 %         Krange = Kmax-Kmin + 1;
-         Kmin = 0.01;
+         Kmin = 0.12;
          Kmax = 0.2;
          Krange = int8(100*(Kmax-Kmin) + 1);
         
@@ -122,10 +124,10 @@ switch fix
             %[min_delay,c1_min,c2_min] = optimize_times_nonlin(pmax,K,B,N,gi,gj);
             
 
-            opt_delays(K-Kmin+1) = min_delay;
-            opt_c1(K-Kmin+1) = c1_min;
-            opt_c2(K-Kmin+1) = c2_min;
-            opt_z(K-Kmin+1,:) = z_min';
+%             opt_delays(K-Kmin+1) = min_delay;
+%             opt_c1(K-Kmin+1) = c1_min;
+%             opt_c2(K-Kmin+1) = c2_min;
+%             opt_z(K-Kmin+1,:) = z_min';
        
             K_idx = int8(100*(K-Kmin)+1);
             opt_delays(K_idx) = min_delay;
@@ -140,7 +142,7 @@ switch fix
         %tiledlayout(2,1)
         nexttile;
         plot(Kmin:0.01:Kmax,opt_delays,'--.') %,'MarkerIndices',1:2:length(opt_delays))
-        title(['SNR = ',num2str(pmax),'dB'])
+        title(['SNR = ',num2str(pdb),'dB'])
         xlabel('K(s)')
         ylabel('Sum Delay')
         %axis([Kmin Kmax 0 max(opt_delays)+0.2])
@@ -200,7 +202,7 @@ end
 % tiledlayout(2,1)
 % nexttile;
 % plot(Kmin:0.01:Kmax,average_delay,'--.') %,'MarkerIndices',1:2:length(opt_delays))
-% title(['SNR = ',num2str(pmax),'dB'])
+% title(['SNR = ',num2str(pdb),'dB'])
 % xlabel('K(s)')
 % ylabel('sum_delay')
 % % axis([SNRmin SNRmax 0 Inf])
