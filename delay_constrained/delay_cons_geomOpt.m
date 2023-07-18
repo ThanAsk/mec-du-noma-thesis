@@ -24,7 +24,7 @@ wj =w(2);
 t = 0;
 while Ax > tolx && Af > tolf 
 %objective function
-s = @(x)log(wi*sum(exp(x(9:16)))+wj*sum(exp(x(17:24))));
+s = @(x)log(wi*sum(exp(x(9:16)+x(1:8)))+wj*sum(exp(x(17:24)+x(1:8))));
 
 %non linear inequality constraints
 nonlcon = @(x)delay_cons_geomCons(x,Tmax,N,B,gi,gj,x0) ;
@@ -43,14 +43,14 @@ options = optimoptions('fmincon','Algorithm','interior-point');
 [x_opt,~]= fmincon(s,x0,[],[],[],[],lb,ub,nonlcon,options);
 
 
-ei_opt = x_opt(9:16);
-ej_opt = x_opt(17:24);
+ei_opt = x_opt(9:16)+x_opt(1:8);
+ej_opt = x_opt(17:24)+x_opt(1:8);
 % ri_opt = x_opt(25:32);
 % rj_opt = x_opt(33:40);
 
 %Ax = sqrt(sum((exp([ei_opt,ej_opt])-exp([x0(9:16),x0(17:24)])).^2));
 Ax = sqrt(sum((exp(x_opt))-exp(x0)).^2);
-Af = abs(wi*sum(exp(ei_opt))+wj*sum(exp(ej_opt)) - wi*sum(exp(x0(9:16)))+wj*sum(exp(x0(17:24))));
+Af = abs(wi*sum(exp(ei_opt))+wj*sum(exp(ej_opt)) - wi*sum(exp(x0(9:16)+x0(1:8)))-wj*sum(exp(x0(17:24)+x0(1:8))));
 x0 = x_opt;
 
 t = t + 1
@@ -58,8 +58,8 @@ t = t + 1
 end
 
 %min_delay = delay;
-ei_min = exp(x0(9:16));
-ej_min = exp(x0(17:24));
+ei_min = exp(x0(9:16)+x0(1:8));
+ej_min = exp(x0(17:24)+x0(1:8));
 min_energy = wi*sum(ei_min)+wj*sum(ej_min);
 
 

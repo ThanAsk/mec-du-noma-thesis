@@ -16,13 +16,13 @@ switch method
         gi = [h(1) h(2)];
         gj = [h(3) h(4)];
 
-    case 'distant_constant'
+    case 'distant'  %distant_constant
 
-        constant = 1; %0.8 close to results
+        constant = 1; %0.8 close to linear results
         l = 3;
-        d = 2;
-        gi = constant*[1 d^(-l)];
-        gj = constant*[d^(-l) 1];
+        d = 0.2;
+        gi = constant*[1 0.2^(l)];
+        gj = constant*[0.2^(l) 1];
 
 %         gi = flip(gi);
 %         gj = flip(gj);
@@ -35,12 +35,12 @@ switch method
         gi = [h(1) h(2)];
         gj = [h(3) h(4)];
 
-    case 'close_constant'
+    case 'close'
         %users close --> distances to stations almost the same
         l = 1;
         ga = 1; %distance to base station a
-        gi = [ga (0.2)^l*ga];
-        gj = [ga (0.2)^l*ga];
+        gi = [ga 2^(-l)*ga];
+        gj = [ga 2^(-l)*ga];
 
 %         gi = flip(gi);
 %         gj = flip(gj);

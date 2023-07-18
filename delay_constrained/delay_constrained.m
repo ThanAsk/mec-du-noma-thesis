@@ -4,8 +4,9 @@ clear;
 B = 10^6; % Hz 
 N = 0.5*(10^6) ; %bit
 
+[gi,gj] = set_gains('distant_constant');
 %[gi,gj] = set_gains('close_constant');
-[gi,gj] = set_gains('constant');
+%[gi,gj] = set_gains('constant');
 
 %Weight vector
 w = [0.5,0.5];
@@ -25,6 +26,7 @@ r = 0;
 for Tmax = Dmin:0.1:Dmax
  
 
+%[min_energy,ei_min,ej_min,Ax,Af] = delay_cons_geomOpt(Tmax,N,B,gi,gj,w);
 [min_energy,ei_min,ej_min,Ax,Af] = delay_cons_geomOpt(Tmax,N,B,gi,gj,w);
 T_idx = int8(10*(Tmax-Dmin)+1);
 opt_energies(T_idx) = min_energy;
