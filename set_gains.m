@@ -21,8 +21,8 @@ switch method
         constant = 1; %0.8 close to linear results
         l = 3;
         d = 0.2;
-        gi = constant*[1 0.2^(l)];
-        gj = constant*[0.2^(l) 1];
+        gi = constant*[1 d^(l)];
+        gj = constant*[d^(l) 1];
 
 %         gi = flip(gi);
 %         gj = flip(gj);
@@ -37,10 +37,10 @@ switch method
 
     case 'close'
         %users close --> distances to stations almost the same
-        l = 1;
-        ga = 1; %distance to base station a
-        gi = [ga 2^(-l)*ga];
-        gj = [ga 2^(-l)*ga];
+        l = 3;
+        da = 1; %distance to base station a
+        gi = [da (0.2*da)^l];
+        gj = [da (0.2*da)^l];
 
 %         gi = flip(gi);
 %         gj = flip(gj);

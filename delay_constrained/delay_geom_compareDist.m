@@ -9,7 +9,7 @@ for idx = 1:length(gains)
 w = weights;
 
 %Set range of  maximum acceptable delays (in seconds)
-Drange = 10*(Dmax-Dmin);
+Drange = int8(10*(Dmax-Dmin)+1);
 
 opt_energies = zeros(1,Drange);
 
