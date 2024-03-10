@@ -1,5 +1,5 @@
 
-clear; 
+
 B = 1; %MHz (important?)
 N = 0.5 ; %Mbit
 

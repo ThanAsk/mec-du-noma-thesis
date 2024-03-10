@@ -7,6 +7,16 @@ tic
 % geom_MonteCarloSNR(0.5,0.1,2,SNR,10) 
 % end
 
+%geom_comparefullK(0.5,20,30)
+%geom_comparefullSNR(0.5,0.2,0.3)
+
+%delay_geom_compareWeights(10^6,0.5*(10^6),0.2,1)
+
+%compare_linear_geomK(10^6,0.5*(10^6),20,30)
+compare_linear_geomSNR(10^6,0.5*(10^6),1,12)
+
+% weights = [0.5 0.5];
+% delay_geom_compare_lin_geom(10^6,0.5*(10^6),weights,0.2,1)
 
 
 % for K = [0.2 0.5 1 5 12]
@@ -16,8 +26,8 @@ tic
 % K = 0.5;
 % geom_MonteCarloK(0.5,K,20,30,50)
 
-w = [0.5 0.5];
-delay_geom_MonteCarlo(10^6,0.5*(10^6),w,0.2,1,10)
+% w = [0.5 0.5];
+% delay_geom_MonteCarlo(10^6,0.5*(10^6),w,0.2,1,10)
 
 
 % 

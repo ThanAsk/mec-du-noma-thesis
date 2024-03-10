@@ -1,4 +1,4 @@
-function [cl,cs] = delay_geom_MonteCarlo(B,N,weights,Dmin,Dmax,rounds)
+function [] = delay_geom_MonteCarlo(B,N,weights,Dmin,Dmax,rounds)
 
 gains = 'random';
 

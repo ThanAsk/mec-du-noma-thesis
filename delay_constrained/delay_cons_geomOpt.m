@@ -61,7 +61,7 @@ end
 ei_min = exp(x0(9:16)+x0(1:8));
 ej_min = exp(x0(17:24)+x0(1:8));
 min_energy = wi*sum(ei_min)+wj*sum(ej_min);
-
+min_energy = 10*log(min_energy); %in dB
 
 end
 
