@@ -1,6 +1,9 @@
 function [] = geom_compareDistK(N,K,SNRmin,SNRmax)
 
- gains = {'constant','distant','close'};
+gains = {'constant','distant','close'};
+marker = {'o','square','diamond'};
+color = {'r','g','b'};
+i = 1;
 
 for idx = 1:length(gains)    
 [gi,gj] = set_gains(gains{idx});
@@ -19,14 +22,15 @@ for pdb = SNRmin:SNRmax
 end
         %Delay plot
         hold on;
-        fig = plot(SNRmin:SNRmax,opt_delays,'--.','MarkerIndices',1:2:length(opt_delays),'DisplayName',gains{idx});
+        fig = plot(SNRmin:SNRmax,opt_delays,"LineStyle","--","Marker",marker{i},"Color",color{i},'MarkerIndices',1:2:length(opt_delays),'DisplayName',gains{idx});
         title(['K = ',num2str(K),'s'])
         xlabel('SNR(dB)')
         ylabel('Sum delay(s)')
         legend
+        i = i + 1;
 end       
-        path='C:\Users\askht\Desktop\autofigs2';
-        saveas(fig,fullfile(path,['geomcompK' append(num2str(K),'SNR',num2str(SNRmin),num2str(SNRmax)) '.jpeg']));
+        path='C:\Users\askht\Desktop\autofigs4';
+        saveas(fig,fullfile(path,['geomcompK' append(num2str(K),'SNR',num2str(SNRmin),num2str(SNRmax)) '.eps']));
         hold off;
         figure;
 

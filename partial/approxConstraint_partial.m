@@ -10,7 +10,7 @@ r0 = x0(9:16);
 L0 = x0(17);
 
 gradk = @(k,z,r,L)exp(z(k)+r(k))/(sum(exp(z+r))+(1/B)*exp(L));
-gradl = (1/B)*exp(L)/(sum(exp(z+r)+(1/B)*exp(L)));
+gradl = (1/B)*exp(L0)/(sum(exp(z0+r0)+(1/B)*exp(L0)));
 gradh = [arrayfun(@(k)gradk(k,z0,r0,L0),1:8),arrayfun(@(k)gradk(k,z0,r0,L0),1:8),gradl];
 
 

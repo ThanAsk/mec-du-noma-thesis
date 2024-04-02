@@ -1,9 +1,6 @@
 function [] = geom_compareDistSNR(N,Kmin,Kmax,p_db)
 
 gains = {'constant','distant','close'};
-marker = {'o','square','diamond'};
-color = {'r','g','b'};
-i = 1;
 
 
 
@@ -41,7 +38,6 @@ title(['SNR = ',num2str(p_db),'dB'])
 xlabel('K(s)')
 ylabel('Sum Delay')
 legend
-i = i + 1;
 end
 
 path='C:\Users\askht\Desktop\autofigs4';

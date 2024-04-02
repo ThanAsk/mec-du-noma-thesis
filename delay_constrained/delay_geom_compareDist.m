@@ -2,6 +2,10 @@ function [] = delay_geom_compareDist(B,N,weights,Dmin,Dmax)
 
 gains = {'constant','distant','close'};
 
+marker = {'o','square','diamond'};
+color = {'r','g','b'};
+i = 1;
+
 for idx = 1:length(gains)    
 [gi,gj] = set_gains(gains{idx});
 
@@ -30,14 +34,15 @@ end
 
 hold on;
 %Total energy plot
-fig2 = plot(Dmin:0.1:Dmax,opt_energies,'--.','DisplayName',gains{idx});
+fig2 = plot(Dmin:0.1:Dmax,opt_energies,"LineStyle","--","Marker",marker{i},"Color",color{i},'DisplayName',gains{idx});
 xlabel('Maximum acceptable delay(s)')
 ylabel('Weighted Sum of Energies')
 legend
+i = i + 1;
 end
 
-path='C:\Users\askht\Desktop\autofigs2';
-saveas(fig2,fullfile(path,['delay_geom' append('w',num2str(w(1)),num2str(w(2)),'D',num2str(Dmin),num2str(Dmax)) '.jpeg']));
+path='C:\Users\askht\Desktop\autofigs4';
+saveas(fig2,fullfile(path,['delay_geom' append('w',num2str(w(1)),num2str(w(2)),'D',num2str(Dmin),num2str(Dmax)) '.eps']));
 hold off;
 figure;
 

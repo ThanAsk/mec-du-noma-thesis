@@ -39,7 +39,7 @@ c(1) = approxConstraint_partial([z,ri,Li],xi0,B,N);
 c(2) = approxConstraint_partial([z,rj,Lj],xj0,B,N); 
 
 c(3) = log(sum(exp(z + pi)) + exp(Li+2*fi+log(ki)+log(Xi))) - log(K*pmax);
-c(4) = log(sum(exp(z + pj)) + exp(Lj+2*fj+log(kj)+log(Xj))) - log(K*pmax);
+c(4) = log(sum(exp(z + pj)) + (kj*Xj)*exp(Lj+2*fj)) - log(K*pmax);
 
 gi_1 = gi(dec_1);
 gj_1 = gj(dec_1);
